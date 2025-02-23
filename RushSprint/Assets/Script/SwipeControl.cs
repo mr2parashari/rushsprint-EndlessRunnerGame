@@ -35,13 +35,13 @@ public class SwipeControl : MonoBehaviour
 
         if (Mathf.Abs(deltaX) > Mathf.Abs(deltaY))
         {
-            if (deltaX > 0) sonicController.MoveRight();
-            else sonicController.MoveLeft();
+            //if (deltaX > 0) sonicController.MoveRight();
+            //else sonicController.MoveLeft();
         }
         else
         {
-            if (deltaY > 0) sonicController.Jump();
-            else sonicController.Slide();
+            //if (deltaY > 0) sonicController.Jump();
+            //else sonicController.Slide();
         }
     }
 }

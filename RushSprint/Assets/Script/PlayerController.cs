@@ -1,73 +1,127 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     public float forwardSpeed = 10f;
-    public float laneDistance = 3f; // Distance between lanes
+    public float laneDistance = 3f;
     public float jumpForce = 10f;
+    public float gravity = -20f;
+    public float slideDuration = 0.8f;
 
     private CharacterController controller;
     private Vector3 moveDirection;
-    private int lane = 1; // 0 = left, 1 = center, 2 = right
+    private int lane = 1;
     private bool isJumping = false;
+    private bool isSliding = false;
+
+    private Animator anim;
+
+    private Vector2 touchStartPos;
+    private Vector2 touchEndPos;
+    private bool swipeUp, swipeDown;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-        // Move forward automatically
         moveDirection.z = forwardSpeed;
+        DetectSwipe(); // Call swipe detection
 
-        // Handle lane switching
+        // Lane Switching (Left/Right)
         if (Input.GetKeyDown(KeyCode.LeftArrow) && lane > 0)
-        {
             lane--;
-        }
+
         if (Input.GetKeyDown(KeyCode.RightArrow) && lane < 2)
-        {
             lane++;
-        }
 
         float targetX = (lane - 1) * laneDistance;
-        moveDirection.x = (targetX - transform.position.x) * 10f; // Smooth transition
+        moveDirection.x = (targetX - transform.position.x) * 10f;
 
-        // Handle jumping
+        // Jumping (Spacebar or Swipe Up)
         if (controller.isGrounded)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if ((Input.GetKeyDown(KeyCode.Space) || swipeUp) && !isSliding)
             {
-                isJumping = true;
-                moveDirection.y = jumpForce;
+                swipeUp = false;
+                StartCoroutine(Jump());
             }
         }
         else
         {
-            moveDirection.y += Physics.gravity.y * Time.deltaTime; // Apply gravity
+            moveDirection.y += gravity * Time.deltaTime;
+        }
+
+        // Sliding (Down Arrow or Swipe Down)
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || swipeDown) && controller.isGrounded && !isJumping && !isSliding)
+        {
+            swipeDown = false;
+            StartCoroutine(Slide());
         }
 
         controller.Move(moveDirection * Time.deltaTime);
     }
 
-    public void MoveLeft()
+    IEnumerator Jump()
     {
-        if (lane > 0) lane--;
+        isJumping = true;
+        anim.SetBool("isJumping", true);
+        moveDirection.y = jumpForce;
+
+        yield return new WaitForSeconds(0.2f);
+        while (!controller.isGrounded)
+        {
+            yield return null;
+        }
+
+        isJumping = false;
+        anim.SetBool("isJumping", false);
+        anim.SetTrigger("RunTrigger");
     }
 
-    public void MoveRight()
+    IEnumerator Slide()
     {
-        if (lane < 2) lane++;
+        isSliding = true;
+        anim.SetBool("isSliding", true);
+        controller.height = 0.5f;
+
+        yield return new WaitForSeconds(slideDuration);
+
+        controller.height = 2.0f;
+        isSliding = false;
+        anim.SetBool("isSliding", false);
+        anim.SetTrigger("RunTrigger");
     }
 
-    public void Jump()
+    void DetectSwipe()
     {
-        if (controller.isGrounded) moveDirection.y = jumpForce;
-    }
+        swipeUp = swipeDown = false;
 
-    public void Slide()
-    {
-        // Implement slide animation
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                touchStartPos = touch.position;
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                touchEndPos = touch.position;
+                Vector2 swipeDelta = touchEndPos - touchStartPos;
+
+                if (Mathf.Abs(swipeDelta.y) > Mathf.Abs(swipeDelta.x)) // Vertical swipe
+                {
+                    if (swipeDelta.y > 50) // Swipe Up
+                        swipeUp = true;
+                    else if (swipeDelta.y < -50) // Swipe Down
+                        swipeDown = true;
+                }
+            }
+        }
     }
 }
