@@ -4,14 +4,14 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     public float forwardSpeed = 10f;
-    public float laneDistance = 3f;
+    public float laneDistance = 3f; // Distance between lanes
     public float jumpForce = 10f;
     public float gravity = -20f;
     public float slideDuration = 0.8f;
 
     private CharacterController controller;
     private Vector3 moveDirection;
-    private int lane = 1;
+    private int lane = 1; // 0 = Left, 1 = Middle, 2 = Right
     private bool isJumping = false;
     private bool isSliding = false;
 
@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;
-    private bool swipeUp, swipeDown;
+    private bool swipeUp, swipeDown, swipeLeft, swipeRight;
 
     void Start()
     {
@@ -33,11 +33,17 @@ public class PlayerController : MonoBehaviour
         DetectSwipe(); // Call swipe detection
 
         // Lane Switching (Left/Right)
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && lane > 0)
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) || swipeLeft) && lane > 0)
+        {
             lane--;
+            swipeLeft = false; // Reset swipe
+        }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) && lane < 2)
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || swipeRight) && lane < 2)
+        {
             lane++;
+            swipeRight = false; // Reset swipe
+        }
 
         float targetX = (lane - 1) * laneDistance;
         moveDirection.x = (targetX - transform.position.x) * 10f;
@@ -99,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
     void DetectSwipe()
     {
-        swipeUp = swipeDown = false;
+        swipeUp = swipeDown = swipeLeft = swipeRight = false;
 
         if (Input.touchCount > 0)
         {
@@ -114,7 +120,14 @@ public class PlayerController : MonoBehaviour
                 touchEndPos = touch.position;
                 Vector2 swipeDelta = touchEndPos - touchStartPos;
 
-                if (Mathf.Abs(swipeDelta.y) > Mathf.Abs(swipeDelta.x)) // Vertical swipe
+                if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y)) // Horizontal Swipe
+                {
+                    if (swipeDelta.x > 50) // Swipe Right
+                        swipeRight = true;
+                    else if (swipeDelta.x < -50) // Swipe Left
+                        swipeLeft = true;
+                }
+                else // Vertical Swipe
                 {
                     if (swipeDelta.y > 50) // Swipe Up
                         swipeUp = true;
@@ -124,4 +137,22 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Obstacle"))
+        {
+            Debug.Log("Hit Obstacle!");
+
+            if (GameManager.instance.ringCount > 0) // Lose rings instead of dying
+            {
+                GameManager.instance.LoseRings();
+            }
+            else
+            {
+                Debug.Log("Game Over!");
+                Time.timeScale = 0; // Stop the game
+            }
+        }
+    }
+
 }
