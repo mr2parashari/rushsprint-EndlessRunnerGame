@@ -7,8 +7,8 @@ public class TrackManager : MonoBehaviour
     public Transform player;
     private List<GameObject> activeTracks = new List<GameObject>();
     private float spawnZ = 0f;
-    private float trackLength = 15f;
-    private int numTracksOnScreen = 5;
+    private float trackLength = 800f;
+    private int numTracksOnScreen = 1;
 
     void Start()
     {
@@ -29,8 +29,7 @@ public class TrackManager : MonoBehaviour
 
     void SpawnTrack()
     {
-        GameObject track = Instantiate(trackPrefabs[Random.Range(0, trackPrefabs.Length)],
-                                       new Vector3(0, 0, spawnZ), Quaternion.identity);
+        GameObject track = Instantiate(trackPrefabs[Random.Range(0, trackPrefabs.Length)], new Vector3(0, 0, spawnZ), Quaternion.identity);
         activeTracks.Add(track);
         spawnZ += trackLength;
     }

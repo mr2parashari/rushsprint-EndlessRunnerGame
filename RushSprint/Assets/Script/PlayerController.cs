@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 touchEndPos;
     private bool swipeUp, swipeDown, swipeLeft, swipeRight;
 
+    // Boost Speed
+    private bool isBoosted = false;
+    private float normalSpeed;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -137,22 +141,22 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    void OnTriggerEnter(Collider other)
+    public void ActivateSpeedBoost(float boostAmount, float duration)
     {
-        if (other.CompareTag("Obstacle"))
+        if (!isBoosted)
         {
-            Debug.Log("Hit Obstacle!");
+            isBoosted = true;
+            normalSpeed = forwardSpeed; // Store the normal speed
+            forwardSpeed += boostAmount; // Increase speed
 
-            if (GameManager.instance.ringCount > 0) // Lose rings instead of dying
-            {
-                GameManager.instance.LoseRings();
-            }
-            else
-            {
-                Debug.Log("Game Over!");
-                Time.timeScale = 0; // Stop the game
-            }
+            StartCoroutine(ResetSpeedAfterDelay(duration));
         }
     }
 
+    IEnumerator ResetSpeedAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        forwardSpeed = normalSpeed; // Revert to normal speed
+        isBoosted = false;
+    }
 }
