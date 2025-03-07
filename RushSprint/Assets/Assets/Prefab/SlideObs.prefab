@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8913822793075792524}
   - component: {fileID: 5504325227553127657}
   - component: {fileID: 8441702558630380049}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Lamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 6728239421656092618}
   - component: {fileID: 8005890082711699634}
   - component: {fileID: 7954471685457491411}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Caixa.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 352858173092781024}
   - component: {fileID: -3910421021840218317}
   - component: {fileID: -7211883081651925172}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SlideObs
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 9019457864653232940}
   - component: {fileID: 6336649521215754877}
   - component: {fileID: 9004504676883100552}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Box (3)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 4826487500086719534}
   - component: {fileID: 7503244101165038975}
   - component: {fileID: 4838766645251906698}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Box (4)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 7101947845248098504}
   - component: {fileID: 5821482475461865392}
   - component: {fileID: 5887146106475961041}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Caixa.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: 4443594422695470045}
   - component: {fileID: 755999655329646008}
   - component: {fileID: 3690806339020274496}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Lamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,7 +650,7 @@ GameObject:
   - component: {fileID: 4266349395525100157}
   - component: {fileID: 1292214395284056876}
   - component: {fileID: 4244922218775988953}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Box (5)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -728,7 +728,7 @@ GameObject:
   - component: {fileID: 2635095063744911769}
   - component: {fileID: 1645111803353192161}
   - component: {fileID: 1706243303271916416}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Caixa.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -814,7 +814,7 @@ GameObject:
   - component: {fileID: 178592018533043423}
   - component: {fileID: 3867875496443751098}
   - component: {fileID: 930218880622285890}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Lamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}

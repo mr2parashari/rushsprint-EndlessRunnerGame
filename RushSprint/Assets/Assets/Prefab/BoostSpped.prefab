@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 971705932763583525}
   - component: {fileID: 1890605449121943927}
   - component: {fileID: 6002936956557331244}
+  - component: {fileID: -2400494957548428773}
   m_Layer: 0
   m_Name: BoostSpped
   m_TagString: Coin
@@ -108,3 +109,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.012846399, y: 0.012853554, z: 0.0032537528}
   m_Center: {x: 0.00003971602, y: 0.00017397618, z: -0.0000041872845}
+--- !u!114 &-2400494957548428773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4083349394699827901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fcf6f4a8552dc45bb1f156500dea1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostAmount: 50
+  boostDuration: 5
