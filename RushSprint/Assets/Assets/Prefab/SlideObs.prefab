@@ -216,8 +216,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 352858173092781024}
-  - component: {fileID: -3910421021840218317}
   - component: {fileID: -7211883081651925172}
+  - component: {fileID: -3910421021840218317}
   m_Layer: 3
   m_Name: SlideObs
   m_TagString: Obstacle
@@ -243,18 +243,6 @@ Transform:
   - {fileID: 4266349395525100157}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-3910421021840218317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498558167170972308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddf70a84735fa0f4290d1bfe23f1582c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &-7211883081651925172
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -276,6 +264,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3910421021840218317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498558167170972308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddf70a84735fa0f4290d1bfe23f1582c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
 --- !u!1 &2050276656369867500
 GameObject:
   m_ObjectHideFlags: 0

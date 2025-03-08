@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4083349394699827901
+--- !u!1 &8691337684299827654
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7941547072014824041}
-  - component: {fileID: 971705932763583525}
-  - component: {fileID: 1890605449121943927}
-  - component: {fileID: 6002936956557331244}
-  - component: {fileID: -2400494957548428773}
+  - component: {fileID: 4729542559974063743}
+  - component: {fileID: 8898847924447125466}
+  - component: {fileID: 5925918409332629723}
+  - component: {fileID: 9204362622693293419}
+  - component: {fileID: -483511470239860735}
   m_Layer: 0
-  m_Name: BoostSpped
-  m_TagString: Coin
+  m_Name: BulletPickup
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7941547072014824041
+--- !u!4 &4729542559974063743
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4083349394699827901}
+  m_GameObject: {fileID: 8691337684299827654}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.51, y: 3.37, z: 87.5}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0.68, z: 2.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &971705932763583525
+  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
+--- !u!33 &8898847924447125466
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4083349394699827901}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1890605449121943927
+  m_GameObject: {fileID: 8691337684299827654}
+  m_Mesh: {fileID: 2534964839176971238, guid: 0bfcbde9d6ca19848b5ca748cff14914, type: 3}
+--- !u!23 &5925918409332629723
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4083349394699827901}
+  m_GameObject: {fileID: 8691337684299827654}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8df5a48c50985cd4c8d49b609ba5b7a4, type: 2}
+  - {fileID: -876546973899608171, guid: 0bfcbde9d6ca19848b5ca748cff14914, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,13 +88,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6002936956557331244
+--- !u!65 &9204362622693293419
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4083349394699827901}
+  m_GameObject: {fileID: 8691337684299827654}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -107,19 +107,18 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.012846399, y: 0.012853554, z: 0.0032537528}
-  m_Center: {x: 0.00003971602, y: 0.00017397618, z: -0.0000041872845}
---- !u!114 &-2400494957548428773
+  m_Size: {x: 0.81940997, y: 1.4633217, z: 1.6185036}
+  m_Center: {x: -0.015610516, y: 0.06821716, z: 0.035868227}
+--- !u!114 &-483511470239860735
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4083349394699827901}
+  m_GameObject: {fileID: 8691337684299827654}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12fcf6f4a8552dc45bb1f156500dea1e, type: 3}
+  m_Script: {fileID: 11500000, guid: 05e43ba6e0147f44dbd65aedc7748e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boostAmount: 50
-  boostDuration: 5
+  ammoAmount: 4
