@@ -216,7 +216,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 352858173092781024}
-  - component: {fileID: -7211883081651925172}
   - component: {fileID: -3910421021840218317}
   m_Layer: 3
   m_Name: SlideObs
@@ -243,27 +242,6 @@ Transform:
   - {fileID: 4266349395525100157}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &-7211883081651925172
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498558167170972308}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-3910421021840218317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf70a84735fa0f4290d1bfe23f1582c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
 --- !u!1 &2050276656369867500
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +263,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9019457864653232940}
-  - component: {fileID: 6336649521215754877}
   - component: {fileID: 9004504676883100552}
   m_Layer: 3
   m_Name: Box (3)
@@ -312,28 +288,6 @@ Transform:
   - {fileID: 4443594422695470045}
   m_Father: {fileID: 352858173092781024}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &6336649521215754877
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2050276656369867500}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!65 &9004504676883100552
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -364,7 +318,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4826487500086719534}
-  - component: {fileID: 7503244101165038975}
   - component: {fileID: 4838766645251906698}
   m_Layer: 3
   m_Name: Box (4)
@@ -390,28 +343,6 @@ Transform:
   - {fileID: 178592018533043423}
   m_Father: {fileID: 352858173092781024}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &7503244101165038975
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2568360389527598574}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!65 &4838766645251906698
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -649,7 +580,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4266349395525100157}
-  - component: {fileID: 1292214395284056876}
   - component: {fileID: 4244922218775988953}
   m_Layer: 3
   m_Name: Box (5)
@@ -675,28 +605,6 @@ Transform:
   - {fileID: 8913822793075792524}
   m_Father: {fileID: 352858173092781024}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &1292214395284056876
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6515187822893736893}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!65 &4244922218775988953
 BoxCollider:
   m_ObjectHideFlags: 0

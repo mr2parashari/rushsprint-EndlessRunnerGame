@@ -38,16 +38,33 @@ public class PlayerController : MonoBehaviour
     private float normalSpeed;
     private bool obstacleDisabled = false;
 
+    // Audio
+    private AudioSource audioSource;
+
+    public AudioClip runSound;
+    public AudioClip slideSound;
+    public AudioClip jumpSound;
+    public AudioClip shootSound;
+    public AudioClip coinCollectSound;
+    public AudioClip boostSpeedSound;
+    public AudioClip bulletCollectSound;
+
+    //private bool isRunning = false;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         UpdateBulletUI();
+
+        //Audio
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         moveDirection.z = forwardSpeed;
+        PlayLoopingSound(runSound);
         DetectSwipe();
 
         if ((Input.GetKeyDown(KeyCode.LeftArrow) || swipeLeft) && lane > 0)
@@ -70,6 +87,7 @@ public class PlayerController : MonoBehaviour
             {
                 swipeUp = false;
                 StartCoroutine(Jump());
+                PlaySound(jumpSound);
             }
         }
         else
@@ -81,6 +99,7 @@ public class PlayerController : MonoBehaviour
         {
             swipeDown = false;
             StartCoroutine(Slide());
+            PlaySound(slideSound);
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -154,7 +173,9 @@ public class PlayerController : MonoBehaviour
 
     public void Shoot()
     {
-        if(bulletsInGun > 0)
+        PlaySound(shootSound);  
+
+        if (bulletsInGun > 0)
     {
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
 
@@ -183,12 +204,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator AutoReload()
     {
-        //yield return new WaitForSeconds(2f);
-        //currentBullets = Mathf.Min(maxBullets, totalBullets);
-        //UpdateBulletUI();
-        //yield return new WaitForSeconds(2f); // Reload delay
-        //currentBullets = maxBullets;
-        //UpdateBulletUI(); // Update UI after reloading
 
         isReloading = true;
         yield return new WaitForSeconds(2f); // Simulating reload time
@@ -242,8 +257,38 @@ public class PlayerController : MonoBehaviour
         obstacleDisabled = false;
     }
 
+    void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+    }
+
+    void PlayLoopingSound(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+
+    void StopSound()
+    {
+        audioSource.Stop();
+    }
+
     void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Coin"))
+        {
+            PlaySound(coinCollectSound);
+        }
+        else if (other.CompareTag("BoostSpeed"))
+        {
+            PlaySound(boostSpeedSound);
+        }
+        else if (other.CompareTag("BulletCollect"))
+        {
+            PlaySound(bulletCollectSound);
+        }
+
         if (other.CompareTag("Obstacle"))
         {
             if (obstacleDisabled)
@@ -258,421 +303,8 @@ public class PlayerController : MonoBehaviour
                 Destroy(other.gameObject);
                 obstacleHitCount = 0;
             }
+
+            GameManager.instance.PlayerHit();
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*using UnityEngine;
-using System.Collections;
-
-public class PlayerController : MonoBehaviour
-{
-    public float forwardSpeed = 10f;
-    public float laneDistance = 3f;
-    public float jumpForce = 10f;
-    public float gravity = -20f;
-    public float slideDuration = 0.8f;
-
-    private CharacterController controller;
-    private Vector3 moveDirection;
-    private int lane = 1;
-    private bool isJumping = false;
-    private bool isSliding = false;
-    private Animator anim;
-
-    // Boost System
-    private bool isBoosted = false;
-    private float normalSpeed;
-    private bool obstacleCollisionDisabled = false;
-
-    // Gun System
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
-    private int maxBullets = 10;
-    private int currentBullets = 8;
-    private int autoReloadThreshold = 2;
-
-    void Start()
-    {
-        controller = GetComponent<CharacterController>();
-        anim = GetComponent<Animator>();
-    }
-
-    void Update()
-    {
-        moveDirection.z = forwardSpeed;
-
-        // Lane Switching
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && lane > 0)
-        {
-            lane--;
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow) && lane < 2)
-        {
-            lane++;
-        }
-        float targetX = (lane - 1) * laneDistance;
-        moveDirection.x = (targetX - transform.position.x) * 10f;
-
-        // Jumping
-        if (controller.isGrounded)
-        {
-            if (Input.GetKeyDown(KeyCode.Space) && !isSliding)
-            {
-                StartCoroutine(Jump());
-            }
-        }
-        else
-        {
-            moveDirection.y += gravity * Time.deltaTime;
-        }
-
-        // Sliding
-        if (Input.GetKeyDown(KeyCode.DownArrow) && controller.isGrounded && !isJumping && !isSliding)
-        {
-            StartCoroutine(Slide());
-        }
-
-        // Shooting
-        if (Input.GetMouseButtonDown(0)) // Tap or Left Click to Shoot
-        {
-            Shoot();
-        }
-
-        controller.Move(moveDirection * Time.deltaTime);
-    }
-
-    IEnumerator Jump()
-    {
-        isJumping = true;
-        anim.SetBool("isJumping", true);
-        moveDirection.y = jumpForce;
-        yield return new WaitForSeconds(0.2f);
-        while (!controller.isGrounded)
-        {
-            yield return null;
-        }
-        isJumping = false;
-        anim.SetBool("isJumping", false);
-    }
-
-    IEnumerator Slide()
-    {
-        isSliding = true;
-        anim.SetBool("isSliding", true);
-        controller.height = 0.5f;
-        yield return new WaitForSeconds(slideDuration);
-        controller.height = 2.0f;
-        isSliding = false;
-        anim.SetBool("isSliding", false);
-    }
-
-    public void ActivateSpeedBoost(float boostAmount, float duration)
-    {
-        if (!isBoosted)
-        {
-            isBoosted = true;
-            normalSpeed = forwardSpeed;
-            forwardSpeed += boostAmount;
-            obstacleCollisionDisabled = true;
-            StartCoroutine(ResetSpeedAfterDelay(duration));
-        }
-    }
-
-    IEnumerator ResetSpeedAfterDelay(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        forwardSpeed = normalSpeed;
-        isBoosted = false;
-        obstacleCollisionDisabled = false;
-    }
-
-    public void Shoot()
-    {
-        if (currentBullets > 0)
-        {
-            Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
-            currentBullets--;
-
-            if (currentBullets <= autoReloadThreshold)
-            {
-                Invoke("AutoReload", 1.5f);
-            }
-        }
-    }
-
-    void AutoReload()
-    {
-        currentBullets = maxBullets;
-    }
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
-
-public class PlayerController : MonoBehaviour
-{
-    public float forwardSpeed = 10f;
-    public float laneDistance = 3f; // Distance between lanes
-    public float jumpForce = 10f;
-    public float gravity = -20f;
-    public float slideDuration = 0.8f;
-
-    private CharacterController controller;
-    private Vector3 moveDirection;
-    private int lane = 1; // 0 = Left, 1 = Middle, 2 = Right
-    private bool isJumping = false;
-    private bool isSliding = false;
-
-    private Animator anim;
-
-    private Vector2 touchStartPos;
-    private Vector2 touchEndPos;
-    private bool swipeUp, swipeDown, swipeLeft, swipeRight;
-
-    // Boost Speed
-    private bool isBoosted = false;
-    private float normalSpeed;
-
-    // Gun & Bullet System
-    public GameObject bulletPrefab;
-    public Transform bulletSpawnPoint;
-    public int maxBullets = 10;
-    public int currentBullets = 8;
-    public int bulletsInGun = 2; // UI: 2/8
-    private bool isReloading = false;
-    public Text bulletUIText; // Assign in Inspector
-
-    void Start()
-    {
-        controller = GetComponent<CharacterController>();
-        anim = GetComponent<Animator>();
-        UpdateBulletUI();
-    }
-
-    void Update()
-    {
-        moveDirection.z = forwardSpeed;
-        DetectSwipe();
-
-        // Lane Switching
-        if ((Input.GetKeyDown(KeyCode.LeftArrow) || swipeLeft) && lane > 0)
-        {
-            lane--;
-            swipeLeft = false;
-        }
-
-        if ((Input.GetKeyDown(KeyCode.RightArrow) || swipeRight) && lane < 2)
-        {
-            lane++;
-            swipeRight = false;
-        }
-
-        float targetX = (lane - 1) * laneDistance;
-        moveDirection.x = (targetX - transform.position.x) * 10f;
-
-        // Jumping
-        if (controller.isGrounded)
-        {
-            if ((Input.GetKeyDown(KeyCode.Space) || swipeUp) && !isSliding)
-            {
-                swipeUp = false;
-                StartCoroutine(Jump());
-            }
-        }
-        else
-        {
-            moveDirection.y += gravity * Time.deltaTime;
-        }
-
-        // Sliding
-        if ((Input.GetKeyDown(KeyCode.DownArrow) || swipeDown) && controller.isGrounded && !isJumping && !isSliding)
-        {
-            swipeDown = false;
-            StartCoroutine(Slide());
-        }
-
-        // Shooting
-        if (Input.GetKeyDown(KeyCode.Space) && !isReloading) // PC
-        {
-            Shoot();
-        }
-
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !isReloading) // Mobile Tap
-        {
-            Shoot();
-        }
-
-        controller.Move(moveDirection * Time.deltaTime);
-    }
-
-    IEnumerator Jump()
-    {
-        isJumping = true;
-        anim.SetBool("isJumping", true);
-        moveDirection.y = jumpForce;
-
-        yield return new WaitForSeconds(0.2f);
-        while (!controller.isGrounded)
-        {
-            yield return null;
-        }
-
-        isJumping = false;
-        anim.SetBool("isJumping", false);
-        anim.SetTrigger("RunTrigger");
-    }
-
-    IEnumerator Slide()
-    {
-        isSliding = true;
-        anim.SetBool("isSliding", true);
-        controller.height = 0.5f;
-
-        yield return new WaitForSeconds(slideDuration);
-
-        controller.height = 2.0f;
-        isSliding = false;
-        anim.SetBool("isSliding", false);
-        anim.SetTrigger("RunTrigger");
-    }
-
-    void DetectSwipe()
-    {
-        swipeUp = swipeDown = swipeLeft = swipeRight = false;
-
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Began)
-            {
-                touchStartPos = touch.position;
-            }
-            else if (touch.phase == TouchPhase.Ended)
-            {
-                touchEndPos = touch.position;
-                Vector2 swipeDelta = touchEndPos - touchStartPos;
-
-                if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y)) // Horizontal Swipe
-                {
-                    if (swipeDelta.x > 50)
-                        swipeRight = true;
-                    else if (swipeDelta.x < -50)
-                        swipeLeft = true;
-                }
-                else
-                {
-                    if (swipeDelta.y > 50)
-                        swipeUp = true;
-                    else if (swipeDelta.y < -50)
-                        swipeDown = true;
-                }
-            }
-        }
-    }
-
-    // Gun & Shooting System
-    void Shoot()
-    {
-        if (bulletsInGun > 0)
-        {
-            Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-            bulletsInGun--;
-            UpdateBulletUI();
-
-            if (bulletsInGun == 0)
-            {
-                StartCoroutine(ReloadGun());
-            }
-        }
-    }
-
-    IEnumerator ReloadGun()
-    {
-        isReloading = true;
-        yield return new WaitForSeconds(2f); // Simulating reload time
-
-        if (currentBullets >= 2)
-        {
-            bulletsInGun = 2;
-            currentBullets -= 2;
-        }
-        else
-        {
-            bulletsInGun = currentBullets;
-            currentBullets = 0;
-        }
-
-        isReloading = false;
-        UpdateBulletUI();
-    }
-
-    public void CollectBullets(int amount)
-    {
-        currentBullets = Mathf.Min(currentBullets + amount, maxBullets);
-        UpdateBulletUI();
-    }
-
-    void UpdateBulletUI()
-    {
-        bulletUIText.text = bulletsInGun + "/" + currentBullets;
-    }
-
-    // Speed Boost System
-    public void ActivateSpeedBoost(float boostAmount, float duration)
-    {
-        if (!isBoosted)
-        {
-            isBoosted = true;
-            normalSpeed = forwardSpeed;
-            forwardSpeed += boostAmount;
-
-            StartCoroutine(ResetSpeedAfterDelay(duration));
-        }
-    }
-
-    IEnumerator ResetSpeedAfterDelay(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        forwardSpeed = normalSpeed;
-        isBoosted = false;
-    }
-}*/

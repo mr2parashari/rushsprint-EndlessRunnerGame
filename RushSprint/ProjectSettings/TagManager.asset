@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Coin
   - Obstacle
+  - BulletPickup
+  - BulletCollect
+  - BoostSpeed
   layers:
   - Default
   - TransparentFX
