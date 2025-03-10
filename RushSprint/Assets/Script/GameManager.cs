@@ -58,18 +58,24 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
+    [System.Obsolete]
     public void PlayerHit()
     {
         Debug.Log("Player hit detected, going to game over");
         GameOver();
     }
 
+    [System.Obsolete]
     public void GameOver()
     {
         Debug.Log("Game Over function called");
         gameOverUI.SetActive(true);
         pauseButton.gameObject.SetActive(false);
         Time.timeScale = 0f; // Pause the game
+
+        // ADs
+        FindObjectOfType<AdMobManager>().ShowInterstitialAd();
+        Debug.Log("Game Over! Interstitial Ad Played.");
     }
 
     public void RestartGame()
