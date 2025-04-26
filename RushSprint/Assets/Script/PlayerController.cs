@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
-
+using TMPro;
 public class PlayerController : MonoBehaviour
 {
     public float forwardSpeed = 10f;
@@ -31,7 +30,7 @@ public class PlayerController : MonoBehaviour
     public int currentBullets = 8;
     public int bulletsInGun = 2; // UI: 2/8
     private bool isReloading = false;
-    public Text bulletUIText; // Assign in Inspector
+    public TextMeshProUGUI bulletUIText; // Assign in Inspector
 
     // Boost Speed
     private bool isBoosted = false;

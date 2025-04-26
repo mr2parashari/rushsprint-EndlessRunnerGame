@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,8 +9,8 @@ public class GameManager : MonoBehaviour
     public int score = 0;
     public int ringCount = 0;
 
-    public Text scoreText;
-    public Text ringText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI ringText;
     public GameObject gameOverUI;
     public GameObject pauseMenuUI;
     public Button mainMenuButton;
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     public Button pauseButton;
     public Button resumeButton;
     public Button pauseMainMenuButton;
+    public bool showAd = false;
     private bool isPaused = false;
 
     void Awake()
@@ -38,6 +40,17 @@ public class GameManager : MonoBehaviour
         pauseButton.onClick.AddListener(PauseGame);
         resumeButton.onClick.AddListener(ResumeGame);
         pauseMainMenuButton.onClick.AddListener(GoToMainMenu);
+    }
+
+    private void OnDestroy()
+    {
+        // Remove Listeners
+        mainMenuButton.onClick.RemoveListener(GoToMainMenu);
+        retryButton.onClick.RemoveListener(RestartGame);
+        playAgainButton.onClick.RemoveListener(PlayAgain);
+        pauseButton.onClick.RemoveListener(PauseGame);
+        resumeButton.onClick.RemoveListener(ResumeGame);
+        pauseMainMenuButton.onClick.RemoveListener(GoToMainMenu);
     }
 
     public void AddScore(int amount)
@@ -74,8 +87,11 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f; // Pause the game
 
         // ADs
-        FindObjectOfType<AdMobManager>().ShowInterstitialAd();
-        Debug.Log("Game Over! Interstitial Ad Played.");
+        if (showAd)
+        {
+            FindObjectOfType<AdMobManager>().ShowInterstitialAd();
+            Debug.Log("Game Over! Interstitial Ad Played.");
+        }
     }
 
     public void RestartGame()
@@ -124,8 +140,6 @@ public class GameManager : MonoBehaviour
         ringText.text = "Rings: " + ringCount;
     }
 }
-
-
 
 
 /*using UnityEngine;
