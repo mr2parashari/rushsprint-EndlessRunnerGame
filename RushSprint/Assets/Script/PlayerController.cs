@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     public float forwardSpeed = 10f;
@@ -103,7 +104,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            if (!EventSystem.current.IsPointerOverGameObject())
+                Shoot();
         }
 
         controller.Move(moveDirection * Time.deltaTime);
@@ -290,6 +292,8 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("Obstacle"))
         {
+            StopSound();
+
             if (obstacleDisabled)
             {
                 other.gameObject.SetActive(false);

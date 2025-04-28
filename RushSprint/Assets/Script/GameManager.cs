@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public bool showAd = false;
     private bool isPaused = false;
 
+
+    #region Monobehaviour Methods
+
     void Awake()
     {
         if (instance == null)
@@ -53,6 +56,15 @@ public class GameManager : MonoBehaviour
         pauseMainMenuButton.onClick.RemoveListener(GoToMainMenu);
     }
 
+    private void Update()
+    {
+        AddScore(Mathf.RoundToInt(10f * Time.deltaTime));
+    }
+
+    #endregion
+
+
+    #region Custom Methods
     public void AddScore(int amount)
     {
         score += amount;
@@ -139,6 +151,8 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score;
         ringText.text = "Rings: " + ringCount;
     }
+
+    #endregion
 }
 
 
