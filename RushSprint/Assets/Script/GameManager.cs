@@ -32,7 +32,13 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
+
+        // Load last saved score
+        score = PlayerPrefs.GetInt(Utils.SCORE, 0);
         UpdateUI();
+
+        Debug.Log("Score from PlayerPrefabs : " + score);
+
         gameOverUI.SetActive(false);
         pauseMenuUI.SetActive(false);
 
@@ -58,7 +64,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        AddScore(Mathf.RoundToInt(10f * Time.deltaTime));
+        int scoreToAdd = Mathf.RoundToInt(10f * Time.deltaTime);
+        AddScore(scoreToAdd);
     }
 
     #endregion
@@ -93,6 +100,9 @@ public class GameManager : MonoBehaviour
     [System.Obsolete]
     public void GameOver()
     {
+        PlayerPrefs.SetInt(Utils.SCORE, score);
+        PlayerPrefs.Save();
+
         Debug.Log("Game Over function called");
         gameOverUI.SetActive(true);
         pauseButton.gameObject.SetActive(false);
@@ -108,18 +118,27 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        PlayerPrefs.SetInt(Utils.SCORE, score); // Save before reload
+        PlayerPrefs.Save();
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void GoToMainMenu()
     {
+        PlayerPrefs.SetInt(Utils.SCORE, score); // Save before menu
+        PlayerPrefs.Save();
+
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu"); // Change this to your Main Menu scene name
     }
 
     public void PlayAgain()
     {
+        PlayerPrefs.SetInt(Utils.SCORE, score); // Save before reload
+        PlayerPrefs.Save();
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

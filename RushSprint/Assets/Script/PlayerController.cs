@@ -59,12 +59,13 @@ public class PlayerController : MonoBehaviour
 
         //Audio
         audioSource = GetComponent<AudioSource>();
+        PlayLoopingSound(runSound);
     }
 
     void Update()
     {
         moveDirection.z = forwardSpeed;
-        PlayLoopingSound(runSound);
+        //PlayLoopingSound(runSound);
         DetectSwipe();
 
         if ((Input.GetKeyDown(KeyCode.LeftArrow) || swipeLeft) && lane > 0)
