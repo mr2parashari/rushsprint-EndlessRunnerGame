@@ -6,7 +6,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public int score = 0;
+    public float score = 0;
     public int ringCount = 0;
 
     public TextMeshProUGUI scoreText;
@@ -34,10 +34,9 @@ public class GameManager : MonoBehaviour
 
 
         // Load last saved score
-        score = PlayerPrefs.GetInt(Utils.SCORE, 0);
-        UpdateUI();
-
+        score = PlayerPrefs.GetFloat(Utils.SCORE, 0);
         Debug.Log("Score from PlayerPrefabs : " + score);
+        UpdateUI();
 
         gameOverUI.SetActive(false);
         pauseMenuUI.SetActive(false);
@@ -64,17 +63,17 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        int scoreToAdd = Mathf.RoundToInt(10f * Time.deltaTime);
-        AddScore(scoreToAdd);
+        score += (10 * Time.deltaTime);
+        AddScore();
     }
 
     #endregion
 
 
     #region Custom Methods
-    public void AddScore(int amount)
+
+    public void AddScore()
     {
-        score += amount;
         UpdateUI();
     }
 
@@ -91,16 +90,16 @@ public class GameManager : MonoBehaviour
     }
 
     [System.Obsolete]
-    public void PlayerHit()
+    public void PlayerHit(GameObject obj)
     {
-        Debug.Log("Player hit detected, going to game over");
+        Debug.Log($"Player hit detected , {obj.name} going to game over");
         GameOver();
     }
 
     [System.Obsolete]
     public void GameOver()
     {
-        PlayerPrefs.SetInt(Utils.SCORE, score);
+        PlayerPrefs.SetFloat(Utils.SCORE, score);
         PlayerPrefs.Save();
 
         Debug.Log("Game Over function called");
@@ -118,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        PlayerPrefs.SetInt(Utils.SCORE, score); // Save before reload
+        PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before reload
         PlayerPrefs.Save();
 
         Time.timeScale = 1f;
@@ -127,7 +126,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        PlayerPrefs.SetInt(Utils.SCORE, score); // Save before menu
+        PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before menu
         PlayerPrefs.Save();
 
         Time.timeScale = 1f;
@@ -136,7 +135,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayAgain()
     {
-        PlayerPrefs.SetInt(Utils.SCORE, score); // Save before reload
+        PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before reload
         PlayerPrefs.Save();
 
         Time.timeScale = 1f;
@@ -167,7 +166,7 @@ public class GameManager : MonoBehaviour
 
     void UpdateUI()
     {
-        scoreText.text = "Score: " + score;
+        scoreText.text = "Score: " + (int)score;
         ringText.text = "Rings: " + ringCount;
     }
 

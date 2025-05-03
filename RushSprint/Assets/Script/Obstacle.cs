@@ -18,7 +18,7 @@ public class Obstacle : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.PlayerHit();  // Call game over logic
+            GameManager.instance.PlayerHit(this.gameObject);  // Call game over logic
         }
     }
 }

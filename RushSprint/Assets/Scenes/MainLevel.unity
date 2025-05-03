@@ -1148,7 +1148,7 @@ GameObject:
   - component: {fileID: 783120663}
   - component: {fileID: 783120662}
   m_Layer: 5
-  m_Name: GameOver
+  m_Name: GameOverPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2828,7 +2828,7 @@ GameObject:
   - component: {fileID: 1621615242}
   - component: {fileID: 1621615241}
   m_Layer: 5
-  m_Name: PauseMenuUi
+  m_Name: PausePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

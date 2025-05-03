@@ -308,7 +308,7 @@ public class PlayerController : MonoBehaviour
                 obstacleHitCount = 0;
             }
 
-            GameManager.instance.PlayerHit();
+            GameManager.instance.PlayerHit(other.gameObject);
         }
     }
 }
