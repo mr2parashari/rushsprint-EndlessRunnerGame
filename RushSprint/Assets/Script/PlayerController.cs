@@ -49,6 +49,10 @@ public class PlayerController : MonoBehaviour
     public AudioClip boostSpeedSound;
     public AudioClip bulletCollectSound;
 
+    private float lastTapTime = 0f;
+    private float doubleTapThreshold = 0.3f; // Max time between taps for a double tap
+    private float nextAllowedTapTime = 0f;   // Cooldown tracker
+
     //private bool isRunning = false;
 
     void Start()
@@ -103,13 +107,31 @@ public class PlayerController : MonoBehaviour
             PlaySound(slideSound);
         }
 
-        if (Input.GetMouseButtonDown(0))
+        controller.Move(moveDirection * Time.deltaTime);
+
+        if (Time.time < nextAllowedTapTime)
+            return; // Still in cooldown, don't allow tapping
+
+        if (Input.GetMouseButtonDown(0) && !isBoosted)
         {
             if (!EventSystem.current.IsPointerOverGameObject())
-                Shoot();
-        }
+            {
+                float currentTime = Time.time;
 
-        controller.Move(moveDirection * Time.deltaTime);
+                if (currentTime - lastTapTime < doubleTapThreshold)
+                {
+                    Shoot();
+
+                    nextAllowedTapTime = Time.time + 0.5f;
+                    lastTapTime = 0f; // Reset
+                }
+                else
+                {
+                    // First tap
+                    lastTapTime = currentTime;
+                }
+            }
+        }
     }
 
     IEnumerator Jump()
@@ -206,7 +228,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator AutoReload()
     {
-
         isReloading = true;
         yield return new WaitForSeconds(2f); // Simulating reload time
 
