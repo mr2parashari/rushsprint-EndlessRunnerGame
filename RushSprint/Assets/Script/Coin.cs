@@ -13,7 +13,7 @@ public class Coin : MonoBehaviour
     {
         if (other.CompareTag("Player")) // Sonic collects the ring
         {
-            GameManager.instance.AddRings(1); // Add 1 ring
+            GameManager.instance.AddCoins(1); // Add 1 ring
             Destroy(gameObject); // Remove Ring
         }
     }

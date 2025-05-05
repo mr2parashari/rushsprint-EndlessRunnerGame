@@ -3387,9 +3387,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
-  ringCount: 0
+  coin: 0
   scoreText: {fileID: 326351560}
-  ringText: {fileID: 1746683453}
+  coinText: {fileID: 1746683453}
   gameOverUI: {fileID: 783120660}
   pauseMenuUI: {fileID: 1621615239}
   mainMenuButton: {fileID: 488089097}

@@ -3,10 +3,10 @@ using UnityEditor.SceneManagement;
 
 class EditorScripts : EditorWindow
 {
-    [MenuItem("Scene/Play/MainMenu _%h")]
+    [MenuItem("Scene/Play/Splash _%h")]
     public static void RunMainScene()
     {
-        EditorSceneManager.OpenScene("Assets/Scenes/MainMenu.unity");
+        EditorSceneManager.OpenScene("Assets/Scenes/Splash.unity");
         EditorApplication.isPlaying = true;
     }
 

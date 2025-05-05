@@ -7,10 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public float score = 0;
-    public int ringCount = 0;
+    public int coin = 0;
 
     public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI ringText;
+    public TextMeshProUGUI coinText;
     public GameObject gameOverUI;
     public GameObject pauseMenuUI;
     public Button mainMenuButton;
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
         // Load last saved score
         score = PlayerPrefs.GetFloat(Utils.SCORE, 0);
-        Debug.Log("Score from PlayerPrefabs : " + score);
+        coin = PlayerPrefs.GetInt(Utils.COIN, 0);
         UpdateUI();
 
         gameOverUI.SetActive(false);
@@ -77,15 +77,15 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
-    public void AddRings(int amount)
+    public void AddCoins(int amount)
     {
-        ringCount += amount;
+        coin += amount;
         UpdateUI();
     }
 
-    public void LoseRings()
+    public void LoseCoins()
     {
-        ringCount = 0;
+        coin = 0;
         UpdateUI();
     }
 
@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         PlayerPrefs.SetFloat(Utils.SCORE, score);
+        PlayerPrefs.SetInt(Utils.COIN, coin);
         PlayerPrefs.Save();
 
         Debug.Log("Game Over function called");
@@ -118,6 +119,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before reload
+        PlayerPrefs.SetInt(Utils.COIN, coin); // Save before reload
         PlayerPrefs.Save();
 
         Time.timeScale = 1f;
@@ -127,6 +129,7 @@ public class GameManager : MonoBehaviour
     public void GoToMainMenu()
     {
         PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before menu
+        PlayerPrefs.SetInt(Utils.COIN, coin); // Save before reload
         PlayerPrefs.Save();
 
         Time.timeScale = 1f;
@@ -136,6 +139,7 @@ public class GameManager : MonoBehaviour
     public void PlayAgain()
     {
         PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before reload
+        PlayerPrefs.SetInt(Utils.COIN, coin); // Save before reload
         PlayerPrefs.Save();
 
         Time.timeScale = 1f;
@@ -167,7 +171,7 @@ public class GameManager : MonoBehaviour
     void UpdateUI()
     {
         scoreText.text = "Score: " + (int)score;
-        ringText.text = "Rings: " + ringCount;
+        coinText.text = "Coin: " + coin;
     }
 
     #endregion
