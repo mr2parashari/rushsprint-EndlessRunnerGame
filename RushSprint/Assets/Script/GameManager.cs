@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public float score = 0;
     public int coin = 0;
+    public int gem = 0;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI coinText;
+    public TextMeshProUGUI gemText;
     public GameObject gameOverUI;
     public GameObject pauseMenuUI;
     public Button mainMenuButton;
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
         // Load last saved score
         score = PlayerPrefs.GetFloat(Utils.SCORE, 0);
         coin = PlayerPrefs.GetInt(Utils.COIN, 0);
+        gem = PlayerPrefs.GetInt(Utils.GEM, 0);
         UpdateUI();
 
         gameOverUI.SetActive(false);
@@ -83,6 +86,12 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
+    public void AddGems(int amount)
+    {
+        gem += amount;
+        UpdateUI();
+    }
+
     public void LoseCoins()
     {
         coin = 0;
@@ -99,9 +108,7 @@ public class GameManager : MonoBehaviour
     [System.Obsolete]
     public void GameOver()
     {
-        PlayerPrefs.SetFloat(Utils.SCORE, score);
-        PlayerPrefs.SetInt(Utils.COIN, coin);
-        PlayerPrefs.Save();
+        SaveData();
 
         Debug.Log("Game Over function called");
         gameOverUI.SetActive(true);
@@ -118,9 +125,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before reload
-        PlayerPrefs.SetInt(Utils.COIN, coin); // Save before reload
-        PlayerPrefs.Save();
+        SaveData();
 
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -128,9 +133,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before menu
-        PlayerPrefs.SetInt(Utils.COIN, coin); // Save before reload
-        PlayerPrefs.Save();
+        SaveData();
 
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu"); // Change this to your Main Menu scene name
@@ -138,9 +141,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayAgain()
     {
-        PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before reload
-        PlayerPrefs.SetInt(Utils.COIN, coin); // Save before reload
-        PlayerPrefs.Save();
+        SaveData();
 
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -172,6 +173,15 @@ public class GameManager : MonoBehaviour
     {
         scoreText.text = "Score: " + (int)score;
         coinText.text = "Coin: " + coin;
+        gemText.text = "Gem: " + gem;
+    }
+
+    private void SaveData()
+    {
+        PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before reload
+        PlayerPrefs.SetInt(Utils.COIN, coin); // Save before reload
+        PlayerPrefs.SetInt(Utils.GEM, gem); // Save before reload
+        PlayerPrefs.Save();
     }
 
     #endregion

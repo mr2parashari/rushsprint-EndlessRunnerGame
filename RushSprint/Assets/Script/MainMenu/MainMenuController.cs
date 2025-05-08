@@ -8,6 +8,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gemText;
     [SerializeField] private Button playButton;
     [SerializeField] private Button settingButton;
+    [SerializeField] private Toggle soundToggle;
+    [SerializeField] private Toggle musicToggle;
     private int totalCoins;
     private int totalGems;
 
@@ -23,12 +25,18 @@ public class MainMenuController : MonoBehaviour
     {
         playButton.onClick.AddListener(Play);
         settingButton.onClick.AddListener(Setting);
+
+        soundToggle.onValueChanged.AddListener(OnSoundToggleChanged);
+        musicToggle.onValueChanged.AddListener(OnSoundToggleChanged);
     }
 
     private void OnDestroy()
     {
         playButton.onClick.RemoveListener(Play);
         settingButton.onClick.RemoveListener(Setting);
+
+        soundToggle.onValueChanged.RemoveListener(OnSoundToggleChanged);
+        musicToggle.onValueChanged.RemoveListener(OnMusicToggleChnaged);
     }
 
     private void Play()
@@ -39,6 +47,14 @@ public class MainMenuController : MonoBehaviour
     private void Setting()
     {
 
+    }
+
+    private void OnMusicToggleChnaged(bool isOn)
+    {
+    }
+
+    private void OnSoundToggleChanged(bool isOn)
+    {
     }
 
     private void UpdateUI()

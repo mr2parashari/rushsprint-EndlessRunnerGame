@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip shootSound;
     public AudioClip coinCollectSound;
+    public AudioClip gemCollectSound;
     public AudioClip boostSpeedSound;
     public AudioClip bulletCollectSound;
 
@@ -302,6 +303,10 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Coin"))
         {
             PlaySound(coinCollectSound);
+        }
+        else if (other.CompareTag("Gem"))
+        {
+            PlaySound(gemCollectSound);
         }
         else if (other.CompareTag("BoostSpeed"))
         {
