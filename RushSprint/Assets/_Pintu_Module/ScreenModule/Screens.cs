@@ -4,21 +4,6 @@ namespace ScreenUtils
     public enum Screen
     {
         None,
-        Login,
-        Register,
-        VerifyEmailOTP,
-        ResetPassword,
-        ForgotPassword,
-        Leaderboard,
-        Setting,
-        Shop,
-        Menu,
-        CreateScreen,
-        JoinScreen,
-        Lobby,
-        Connection,
-        Instruction,
-        HomeInstruction,
-        GameHistory,
+        Settings
     }
 }

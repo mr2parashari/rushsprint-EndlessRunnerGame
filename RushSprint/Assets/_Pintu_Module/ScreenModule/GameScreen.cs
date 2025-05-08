@@ -4,8 +4,8 @@ namespace ScreenUtils
 {
     public class GameScreen : GameUI
     {
-        public ScreenUtils.Screen backScreen;
-        public ScreenUtils.Screen nextScreen;
+        public Screen backScreen;
+        public Screen nextScreen;
 
         protected void ShowNextScreen()
         {

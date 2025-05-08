@@ -54,8 +54,6 @@ namespace ScreenUtils.Manager
 
         public static void ShowScreen(ScreenUtils.Screen screen)
         {
-            Debug.Log("show screen : " + SceneController.CurrentScene.ToString());
-           
             if (screen.ToString() == "Exit")
             {
                 Application.Quit();
