@@ -18,7 +18,16 @@ public class MainMenuController : MonoBehaviour
         totalCoins = PlayerPrefs.GetInt(Utils.COIN, 0);
         totalGems = PlayerPrefs.GetInt(Utils.GEM, 0);
 
+        UpdateToggles();
         UpdateUI();
+
+        SoundManager.Instance.MuteUnmuteMusic(PlayerPrefs.GetInt(Utils.IS_MUTE_GAME_MUSIC));
+    }
+
+    private void UpdateToggles()
+    {
+        soundToggle.isOn = PlayerPrefs.GetInt(Utils.IS_MUTE_GAME_SOUND) == 1 ? true : false;
+        musicToggle.isOn = PlayerPrefs.GetInt(Utils.IS_MUTE_GAME_MUSIC) == 1 ? true : false;
     }
 
     private void Start()
@@ -27,7 +36,7 @@ public class MainMenuController : MonoBehaviour
         settingButton.onClick.AddListener(Setting);
 
         soundToggle.onValueChanged.AddListener(OnSoundToggleChanged);
-        musicToggle.onValueChanged.AddListener(OnSoundToggleChanged);
+        musicToggle.onValueChanged.AddListener(OnMusicToggleChanged);
     }
 
     private void OnDestroy()
@@ -36,7 +45,7 @@ public class MainMenuController : MonoBehaviour
         settingButton.onClick.RemoveListener(Setting);
 
         soundToggle.onValueChanged.RemoveListener(OnSoundToggleChanged);
-        musicToggle.onValueChanged.RemoveListener(OnMusicToggleChnaged);
+        musicToggle.onValueChanged.RemoveListener(OnMusicToggleChanged);
     }
 
     private void Play()
@@ -46,15 +55,20 @@ public class MainMenuController : MonoBehaviour
 
     private void Setting()
     {
-
     }
 
-    private void OnMusicToggleChnaged(bool isOn)
+    private void OnMusicToggleChanged(bool isOn)
     {
+        int isMuteGameMusic = isOn ? 1 : 0;
+        PlayerPrefs.SetInt(Utils.IS_MUTE_GAME_MUSIC, isMuteGameMusic);
+
+        SoundManager.Instance.MuteUnmuteMusic(PlayerPrefs.GetInt(Utils.IS_MUTE_GAME_MUSIC));
     }
 
     private void OnSoundToggleChanged(bool isOn)
     {
+        int isMuteGameSound = isOn ? 1 : 0;
+        PlayerPrefs.SetInt(Utils.IS_MUTE_GAME_SOUND, isMuteGameSound);
     }
 
     private void UpdateUI()

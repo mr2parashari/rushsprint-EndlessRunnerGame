@@ -35,39 +35,40 @@ public class GameManager : MonoBehaviour
         }
 
 
-        // Load last saved score
+        // Load last saved values
         score = PlayerPrefs.GetFloat(Utils.SCORE, 0);
         coin = PlayerPrefs.GetInt(Utils.COIN, 0);
         gem = PlayerPrefs.GetInt(Utils.GEM, 0);
-        UpdateUI();
 
-        gameOverUI.SetActive(false);
-        pauseMenuUI.SetActive(false);
+        UpdateUI();
+        gameOverUI?.SetActive(false);
+        pauseMenuUI?.SetActive(false);
 
         // Assign button listeners
-        mainMenuButton.onClick.AddListener(GoToMainMenu);
-        retryButton.onClick.AddListener(RestartGame);
-        playAgainButton.onClick.AddListener(PlayAgain);
-        pauseButton.onClick.AddListener(PauseGame);
-        resumeButton.onClick.AddListener(ResumeGame);
-        pauseMainMenuButton.onClick.AddListener(GoToMainMenu);
+        mainMenuButton?.onClick.AddListener(GoToMainMenu);
+        retryButton?.onClick.AddListener(RestartGame);
+        playAgainButton?.onClick.AddListener(PlayAgain);
+        pauseButton?.onClick.AddListener(PauseGame);
+        resumeButton?.onClick.AddListener(ResumeGame);
+        pauseMainMenuButton?.onClick.AddListener(GoToMainMenu);
     }
 
     private void OnDestroy()
     {
         // Remove Listeners
-        mainMenuButton.onClick.RemoveListener(GoToMainMenu);
-        retryButton.onClick.RemoveListener(RestartGame);
-        playAgainButton.onClick.RemoveListener(PlayAgain);
-        pauseButton.onClick.RemoveListener(PauseGame);
-        resumeButton.onClick.RemoveListener(ResumeGame);
-        pauseMainMenuButton.onClick.RemoveListener(GoToMainMenu);
+        mainMenuButton?.onClick.RemoveListener(GoToMainMenu);
+        retryButton?.onClick.RemoveListener(RestartGame);
+        playAgainButton?.onClick.RemoveListener(PlayAgain);
+        pauseButton?.onClick.RemoveListener(PauseGame);
+        resumeButton?.onClick.RemoveListener(ResumeGame);
+        pauseMainMenuButton?.onClick.RemoveListener(GoToMainMenu);
     }
 
     private void Update()
     {
-        score += (10 * Time.deltaTime);
-        AddScore();
+        score += 10 * Time.deltaTime;
+        //AddScore();
+        UpdateUI();
     }
 
     #endregion
@@ -75,10 +76,10 @@ public class GameManager : MonoBehaviour
 
     #region Custom Methods
 
-    public void AddScore()
-    {
-        UpdateUI();
-    }
+    //public void AddScore()
+    //{
+    //    UpdateUI();
+    //}
 
     public void AddCoins(int amount)
     {
@@ -109,8 +110,6 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         SaveData();
-
-        Debug.Log("Game Over function called");
         gameOverUI.SetActive(true);
         pauseButton.gameObject.SetActive(false);
         Time.timeScale = 0f; // Pause the game
@@ -125,62 +124,67 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SaveData();
-
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void GoToMainMenu()
     {
-        SaveData();
-
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); // Change this to your Main Menu scene name
+        LoadScene("MainMenu"); // Change this to your Main Menu scene name
     }
 
     public void PlayAgain()
     {
-        SaveData();
+        LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
+    private void LoadScene(object sceneIdentifier)
+    {
+        SaveData();
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        if (sceneIdentifier is int index)
+            SceneManager.LoadScene(index);
+        else if (sceneIdentifier is string name)
+            SceneManager.LoadScene(name);
     }
 
     public void PauseGame()
     {
-        if (!isPaused)
-        {
-            isPaused = true;
-            pauseMenuUI.SetActive(true);
-            pauseButton.gameObject.SetActive(false);
-            Time.timeScale = 0f;
-        }
+        if (isPaused) return;
+
+        SoundManager.Instance.Pause(AudioType.RUNNING);
+        SoundManager.Instance.Pause(AudioType.BG);
+
+        isPaused = true;
+        pauseMenuUI?.SetActive(true);
+        pauseButton?.gameObject.SetActive(false);
+        Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
-        if (isPaused)
-        {
-            isPaused = false;
-            pauseMenuUI.SetActive(false);
-            pauseButton.gameObject.SetActive(true);
-            Time.timeScale = 1f;
-        }
+        if (!isPaused) return;
+
+        SoundManager.Instance.Play(AudioType.RUNNING);
+
+        isPaused = false;
+        pauseMenuUI?.SetActive(false);
+        pauseButton?.gameObject.SetActive(true);
+        Time.timeScale = 1f;
     }
 
     void UpdateUI()
     {
-        scoreText.text = "Score: " + (int)score;
-        coinText.text = "Coin: " + coin;
-        gemText.text = "Gem: " + gem;
+        if (scoreText) scoreText.text = "Score: " + (int)score;
+        if (coinText) coinText.text = "Coin: " + coin;
+        if (gemText) gemText.text = "Gem: " + gem;
     }
 
     private void SaveData()
     {
-        PlayerPrefs.SetFloat(Utils.SCORE, score); // Save before reload
-        PlayerPrefs.SetInt(Utils.COIN, coin); // Save before reload
-        PlayerPrefs.SetInt(Utils.GEM, gem); // Save before reload
+        PlayerPrefs.SetFloat(Utils.SCORE, score);
+        PlayerPrefs.SetInt(Utils.COIN, coin);
+        PlayerPrefs.SetInt(Utils.GEM, gem);
         PlayerPrefs.Save();
     }
 

@@ -3262,7 +3262,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853375540}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8369924c1e2231543ae7b1032adf16d1, type: 3}
@@ -3510,6 +3510,8 @@ MonoBehaviour:
   gemText: {fileID: 667146231}
   playButton: {fileID: 1204639564}
   settingButton: {fileID: 1153487527}
+  soundToggle: {fileID: 961639733}
+  musicToggle: {fileID: 1368197389}
 --- !u!4 &25742666686497957
 Transform:
   m_ObjectHideFlags: 0
