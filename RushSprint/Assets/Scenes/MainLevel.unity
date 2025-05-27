@@ -881,6 +881,9 @@ MonoBehaviour:
   - {fileID: 8372773328320257344, guid: d3b6568bac8710743950a0570a47c567, type: 3}
   - {fileID: 2327870870160264622, guid: d3589ffe5a0dc63458d840f29558a4f1, type: 3}
   player: {fileID: 3620590560837614182}
+  coinPrefab: {fileID: 3008802161970794752, guid: 89bd464fef3622a428b3773560e7df7d, type: 3}
+  coinsPerTrack: 4
+  coinSpacingZ: 2.5
 --- !u!4 &718393280
 Transform:
   m_ObjectHideFlags: 0

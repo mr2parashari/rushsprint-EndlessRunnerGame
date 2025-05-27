@@ -11,6 +11,12 @@ public class TrackManager : MonoBehaviour
     private int nextSpawnCount = 2; // Tracks to spawn after reaching mid-point
     private float lastTrackLength = 50f; // Default track length (updated dynamically)
 
+    [Header("Coin Settings")]
+    public GameObject coinPrefab;
+    public int coinsPerTrack = 1; // Set coin (e.g., 4 or 5)
+    public float coinSpacingZ = 2f; // Spacing between coins 
+
+
     void Start()
     {
         Debug.Log("TrackManager Started");
@@ -74,6 +80,9 @@ public class TrackManager : MonoBehaviour
 
         activeTracks.Add(track);
         spawnZ += trackLength; // Move spawn position forward
+
+        // Spawn  coin Fn
+        SpawnCoinsOnTrack(track);
     }
 
     void DeleteOldTrack()
@@ -99,6 +108,33 @@ public class TrackManager : MonoBehaviour
             return lastTrackLength; // Fallback length
         }
     }
+
+    //Spawn Coins logic - Krishna 27-5-25
+    void SpawnCoinsOnTrack(GameObject track)
+    {
+        // 12 possible X-axis positions
+        float[] trackPositionsX = new float[12];
+        for (int i = 0; i < 12; i++)
+        {
+            trackPositionsX[i] = -1.2f + i; // A  lane width adjust as per trace size here issue 
+        }
+        // random X position for coin line
+        int randomTrackIndex = Random.Range(0, trackPositionsX.Length);
+        float x = trackPositionsX[randomTrackIndex];
+        float y = 1f; // Ground height
+        float startZ = track.transform.position.z + 10f; 
+
+        for (int i = 0; i < coinsPerTrack; i++)
+        {
+            float z = startZ + i * coinSpacingZ;
+            Vector3 pos = new Vector3(x, y, z);
+            Instantiate(coinPrefab, pos, Quaternion.identity);
+        }
+    }
+
+
+
+
 }
 
 
