@@ -7,9 +7,11 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public int score = 0;
     public int ringCount = 0;
+    public int gemsCount = 0;
 
     public Text scoreText;
     public Text ringText;
+    public Text GemsText;
     public GameObject gameOverUI;
     public GameObject pauseMenuUI;
     public Button mainMenuButton;
@@ -51,10 +53,16 @@ public class GameManager : MonoBehaviour
         ringCount += amount;
         UpdateUI();
     }
+    public void AddGems(int amount)
+    {
+        gemsCount += amount;
+        UpdateUI();
+    }
 
     public void LoseRings()
     {
         ringCount = 0;
+        gemsCount = 0;
         UpdateUI();
     }
 
@@ -122,6 +130,7 @@ public class GameManager : MonoBehaviour
     {
         scoreText.text = "Score: " + score;
         ringText.text = "Rings: " + ringCount;
+        GemsText.text = "Gems:" + gemsCount;
     }
 }
 
