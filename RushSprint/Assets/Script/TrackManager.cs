@@ -11,10 +11,10 @@ public class TrackManager : MonoBehaviour
     private int nextSpawnCount = 2; // Tracks to spawn after reaching mid-point
     private float lastTrackLength = 50f; // Default track length (updated dynamically)
 
-    [Header("Coin Settings")]
-    public GameObject coinPrefab;
-    public int coinsPerTrack = 1; // Set coin (e.g., 4 or 5)
-    public float coinSpacingZ = 2f; // Spacing between coins 
+    [Header("gems Settings")]
+    public GameObject gemPrefab;
+    public int gemsPerTrack = 1; // Set coin (e.g., 4 or 5)
+    public float gemSpacingZ = 2f; // Spacing between coins 
 
 
     void Start()
@@ -82,7 +82,7 @@ public class TrackManager : MonoBehaviour
         spawnZ += trackLength; // Move spawn position forward
 
         // Spawn  coin Fn
-        SpawnCoinsOnTrack(track);
+        SpawnGemsOnTrack(track);
     }
 
     void DeleteOldTrack()
@@ -110,13 +110,13 @@ public class TrackManager : MonoBehaviour
     }
 
     //Spawn Coins logic - Krishna 27-5-25
-    void SpawnCoinsOnTrack(GameObject track)
+    void SpawnGemsOnTrack(GameObject track)
     {
         // 12 possible X-axis positions
         float[] trackPositionsX = new float[12];
         for (int i = 0; i < 12; i++)
         {
-            trackPositionsX[i] = -1.2f + i; // A  lane width adjust as per trace size here issue 
+            trackPositionsX[i] = -1f + i; // A  lane width adjust as per trace size here issue 
         }
         // random X position for coin line
         int randomTrackIndex = Random.Range(0, trackPositionsX.Length);
@@ -124,11 +124,11 @@ public class TrackManager : MonoBehaviour
         float y = 1f; // Ground height
         float startZ = track.transform.position.z + 10f; 
 
-        for (int i = 0; i < coinsPerTrack; i++)
+        for (int i = 0; i < gemsPerTrack; i++)
         {
-            float z = startZ + i * coinSpacingZ;
+            float z = startZ + i * gemSpacingZ;
             Vector3 pos = new Vector3(x, y, z);
-            Instantiate(coinPrefab, pos, Quaternion.identity);
+            Instantiate(gemPrefab, pos, Quaternion.identity);
         }
     }
 
