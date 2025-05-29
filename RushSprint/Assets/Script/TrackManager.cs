@@ -116,7 +116,7 @@ public class TrackManager : MonoBehaviour
         float[] trackPositionsX = new float[12];
         for (int i = 0; i < 12; i++)
         {
-            trackPositionsX[i] = 1f + i; // A  lane width adjust as per trace size here issue 
+            trackPositionsX[i] = -1.5f + i; // A  lane width adjust as per trace size here issue 
         }
         // random X position for coin line
         int randomTrackIndex = Random.Range(0, trackPositionsX.Length);

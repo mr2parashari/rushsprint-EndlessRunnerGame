@@ -1125,7 +1125,7 @@ MonoBehaviour:
   player: {fileID: 3620590560837614182}
   gemPrefab: {fileID: 8219200212525664752, guid: 9f0abe32be3cb914faead34094047112, type: 3}
   gemsPerTrack: 4
-  gemSpacingZ: 3
+  gemSpacingZ: 6
 --- !u!4 &718393280
 Transform:
   m_ObjectHideFlags: 0
@@ -1231,7 +1231,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a183ff309c108254fb4013e5fecfb723, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.16
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a183ff309c108254fb4013e5fecfb723, type: 3}
       propertyPath: m_LocalPosition.y
